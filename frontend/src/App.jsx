@@ -16,7 +16,9 @@ function App() {
     const initAuth = async () => {
       // Ping backend once at startup
       try {
-        await api.get('/health', { baseURL: 'http://localhost:8000' }); // Direct ping to root health
+        const apiUrl = import.meta.env.VITE_API_URL;
+        const healthUrl = apiUrl.split('/api/v1')[0] + '/health';
+        await api.get(healthUrl); 
         console.log('✅ Backend is online and responding.');
       } catch (err) {
         console.warn('⚠️ Backend ping failed, server might be starting up...', err);
